@@ -35,7 +35,7 @@ export const register=async (req,res)=>{
              })
 
              return res.status(200).json({
-                message:"Register successfully ",
+                message:" user Register successfully ",
                 success:true
              })
 
@@ -85,7 +85,7 @@ export const login = async (req, res) => {
         // Check if the role matches
         if (role !== user.role) {
             return res.status(400).json({
-                message: "Incorrect role",
+                message: "Account does not exist with current role",
                 success: false,
             });
         }
@@ -139,48 +139,67 @@ export const logout=async(req,res)=>{
 //update
 
 
+
+
 export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
 
-        // Check if required fields are present
-        if (!fullname || !email || !phonenumber || !bio || !skills) {
-            return res.status(400).json({
-                message: "Something is missing",
-                success: false,
-            });
-        }
+        // Check if all required fields are present
+    let skillArray  
+  if(skills){
 
-        // Convert skills from a comma-separated string to an array
-        const skillArray = skills.split(",");
+     skillArray = skills.split(",");
+  }
+        
 
-        // Extract the user ID from the request (you may want to validate how you get userId)
-        const userId = req.userId || req.params.id; // Adjust based on your middleware
+        // Extract the user ID from the JWT payload (already verified by the middleware)
+        console.log(req)
+        const userId = req.id;
 
         // Find the user by ID
         let user = await User.findById(userId);
+        console.log(user)
 
         // If the user does not exist
         if (!user) {
-            return res.status(401).json({
-                message: "Unauthorized user",
+            return res.status(404).json({
+                message: "User not found",
                 success: false,
             });
         }
 
-        // Update user fields
-        user.fullname = fullname;
-        user.email = email;
-        user.phoneNumber = phoneNumber;
-        user.profile.bio = bio;
-        user.profile.skills = skillArray;
+        // Update user profile fields
 
-        // Save the updated user object
+        if(fullname){
+            user.fullname = fullname;
+        }
+        if(email){
+            user.email = email;
+
+        }
+        if(phoneNumber)
+        {
+            user.phoneNumber = phoneNumber;
+
+        }
+        if(bio)
+        {
+            user.profile.bio = bio;
+
+        }
+        if(skills)
+        {
+            user.profile.skills = skillArray;
+            
+        }
+       
         await user.save();
 
         return res.status(200).json({
             message: "Profile updated successfully",
             success: true,
+            user, // Send the updated user object (optional)
         });
     } catch (error) {
         console.log(error);
@@ -190,5 +209,7 @@ export const updateProfile = async (req, res) => {
         });
     }
 };
+
+
 
 

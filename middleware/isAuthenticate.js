@@ -4,7 +4,7 @@ const isAuthentication = async (req, res, next) => {
     try {
         // Access token from cookies (update 'authToken' if you're using a different key)
         const token = req.cookies.authToken;
-
+  console.log(token)
         // Check if token exists
         if (!token) {
             return res.status(401).json({
@@ -14,7 +14,8 @@ const isAuthentication = async (req, res, next) => {
         }
 
         // Verify the token
-        const tokenVerify = await jwt.verify(token, process.env.SECRET_KEY);
+        const tokenVerify = await jwt.verify(token, process.env.SECRATE_KEY);
+        console.log(tokenVerify)
 
         if (!tokenVerify) {
             return res.status(401).json({
@@ -25,6 +26,7 @@ const isAuthentication = async (req, res, next) => {
 
         // Attach userId to the request object for further usage
         req.id = tokenVerify.userId;
+        console.log(req.id)
 
         // Proceed to the next middleware or route handler
         next();

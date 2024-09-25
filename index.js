@@ -8,18 +8,7 @@ dotenv.config({});
 
 const app = express();
 
-app.get("/Home",(req,res)=>{
-    return(
-        res.status(200).json({
-            mesage:"I am coming from backend",
-            success:true
 
-        })
-    )
-})
-// GK6Yd134tMMwBGbF
-// jschauhan2001
-// const adata=mongodb+srv://jschauhan2001:GK6Yd134tMMwBGbF@cluster0.vd7pt.mongodb.net/
 
 
 // Middleware
