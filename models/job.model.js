@@ -1,8 +1,7 @@
-import { application } from "express";
 import mongoose from "mongoose";
 
 
-const jobSchema=new mongoose({
+const jobSchema=new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -19,6 +18,10 @@ const jobSchema=new mongoose({
         type:Number,
         required:true
     },
+    experienceLevel:{
+        type:Number,
+        required:true,
+    },
     location:{
         type:String,
         required:true
@@ -31,23 +34,28 @@ const jobSchema=new mongoose({
         type:String,
         required:true
     },
-    company:{
-        type:mongoose.Types.ObjectId,ref:"company",
-        required:true
+    company123:{
+        type: mongoose.Schema.Types.ObjectId,
+         ref: "Company",
+        // required: true
     },
     created_by:{
-        type:mongoose.Types.ObjectId,ref:"user",
-        required:true
-
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", 
+        // required: true
     },
-    application:{
-        type:mongoose.Types.ObjectId,ref:"Application",
-        
-    }
- 
+    applications:[{
 
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Application"
+    
+       
+        
+    }]
 
 },{timestamps:true})
 
-const job = mongoose.model  ("jobSchema",jobSchema)
+const job = mongoose.model("job",jobSchema)
 export default job
+
+

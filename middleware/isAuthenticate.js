@@ -26,7 +26,7 @@ const isAuthentication = async (req, res, next) => {
 
         // Attach userId to the request object for further usage
         req.id = tokenVerify.userId;
-        console.log(req.id)
+        console.log(req.id+"token")
 
         // Proceed to the next middleware or route handler
         next();

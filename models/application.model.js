@@ -6,7 +6,7 @@ const applicationSchema=new mongoose.Schema({
         required:true
     },
     applicant:{
-        type:mongoose.Schema.Types.ObjectId,ref:"user",
+        type:mongoose.Schema.Types.ObjectId,ref:"User",
         required:true
     },
     status:{
@@ -17,5 +17,5 @@ const applicationSchema=new mongoose.Schema({
 
 },{timestamps:true})
 
-const Application = mongoose.model("applicationSchema",applicationSchema)
+const Application = mongoose.model("Application",applicationSchema)
 export default Application;
