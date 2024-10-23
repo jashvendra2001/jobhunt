@@ -100,10 +100,12 @@ export const login = async (req, res) => {
         const token = jwt.sign(tokenData, process.env.SECRATE_KEY, { expiresIn: '1h' });
 
         // Data to return (without password)
-        const userData = {
+        var userData = {
+            _id : user._id,
             fullname: user.fullname,
             email: user.email,
-            phonenumber: user.phonenumber,
+            phonenumber: user.phoneNumber,
+            role:user.role
         };
 
         // Set the token in cookies and send the response
@@ -113,7 +115,7 @@ export const login = async (req, res) => {
         }).status(200).json({
             message: "Welcome back",
             success: true,
-            data: userData,
+           data:userData
         });
 
     } catch (e) {

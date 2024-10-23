@@ -9,14 +9,16 @@ import jobRouter from "./routes/job.route.js";
 import ApplicationRouter from "./routes/application.route.js";
 dotenv.config({});
 
+
 const app = express();
+const optionCors = {
+  origin: "http://localhost:5173", 
+  credentials: true,
+};
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()); 
-const optionCors = {
-  origin: "http://localhost:3000", 
-  credentials: true,
-};
+
 app.use(cors(optionCors));
 const port = 8000;
 
